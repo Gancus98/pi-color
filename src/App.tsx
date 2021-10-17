@@ -13,7 +13,9 @@ function App() {
   return (
     <div className="App">
       <NavBar isPickerView={isPickerView} handleSetPicker={handleSetPicker} />
-      {isPickerView ? <Picker /> : <p>Library</p>}
+      <div style={{ height: `calc(100% - 70px)` }}>
+        {isPickerView ? <Picker /> : <p>Library</p>}
+      </div>
     </div>
   );
 }
