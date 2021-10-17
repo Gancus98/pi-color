@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from '../../utils/theme';
 
 export const PickerWrapper = styled.div`
   width: 100%;

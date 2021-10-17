@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import CanvasArea from './components/CanvasArea';
 import NavBar from './components/NavBar/NavBar';
 import Picker from './components/Picker/Picker';
 
