@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import CanvasArea from './components/CanvasArea';
 import NavBar from './components/NavBar/NavBar';
+import Picker from './components/Picker/Picker';
 
 function App() {
   const [isPickerView, setIsPickerView] = useState(true);
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <NavBar isPickerView={isPickerView} handleSetPicker={handleSetPicker} />
-      {isPickerView ? <CanvasArea /> : <p>Library</p>}
+      {isPickerView ? <Picker /> : <p>Library</p>}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import NavButton from '../NavButton/NavButton';
 import * as Styled from './NavBar.styles';
 
@@ -8,19 +8,19 @@ type NavBarProps = {
 };
 
 const NavBar: React.FC<NavBarProps> = ({ isPickerView, handleSetPicker }) => {
+  const openPicker = () => {
+    handleSetPicker(true);
+  };
+
+  const openLibrary = () => {
+    handleSetPicker(false);
+  };
+
   return (
     <Styled.NavWrapper>
       <Styled.NavButtonsWrapper>
-        <NavButton
-          buttonText="Picker"
-          isPickerView={isPickerView}
-          handleSetPicker={handleSetPicker}
-        />
-        <NavButton
-          buttonText="Library"
-          isPickerView={isPickerView}
-          handleSetPicker={handleSetPicker}
-        />
+        <NavButton onClick={openPicker} buttonText="Picker" />
+        <NavButton onClick={openLibrary} buttonText="Library" />
       </Styled.NavButtonsWrapper>
     </Styled.NavWrapper>
   );
