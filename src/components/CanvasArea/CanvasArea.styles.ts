@@ -21,6 +21,9 @@ export const Wrapper = styled.div<Props>`
     height: 494px;
     align-items: center;
     justify-content: center;
+    &:hover {
+        cursor: move;
+    }
 `;
 
 export const Button = styled.button`

@@ -6,3 +6,14 @@ export const PickerWrapper = styled.div`
   background-color: antiquewhite;
   display: flex;
 `;
+
+export const LeftSection = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  display: flex;
+`;
