@@ -73,8 +73,6 @@ const Picker: React.FC<PickerProps> = () => {
           handlePickerSize={setPickerSize}
         />
       </Styled.LeftSection>
-      <button onClick={handleZoomIn}>Zomm in</button>
-      <button onClick={handleZoomOut}>Zomm out</button>
       <ColorInfo color={pickedColor} />
     </Styled.PickerWrapper>
   );

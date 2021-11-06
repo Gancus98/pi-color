@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { getImageColorsPalette } from '../../utils/imagePalete';
 import * as Styled from '../CanvasArea/CanvasArea.styles';
 import { ToolActions } from '../Picker/Picker';
 
@@ -27,13 +28,11 @@ const CanvasArea: React.FC<PickerProps> = ({
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
-  const [currentScale, setCurrentScale] = useState(1);
 
   const [imageStartX, setImageStartX] = useState(0);
   const [imageStartY, setImageStartY] = useState(0);
 
   useEffect(() => {
-    console.log(action);
     const canvas: HTMLCanvasElement =
       canvasRef.current as unknown as HTMLCanvasElement;
     if (canvas) {
@@ -42,7 +41,6 @@ const CanvasArea: React.FC<PickerProps> = ({
         clearCanvas(ctx);
         ctx.imageSmoothingEnabled = false;
         ctx.scale(2, 2);
-        setCurrentScale(prev => prev * 2);
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
         );
@@ -57,7 +55,6 @@ const CanvasArea: React.FC<PickerProps> = ({
       } else if (action === ToolActions.ZoomOut) {
         clearCanvas(ctx);
         ctx.scale(0.5, 0.5);
-        setCurrentScale(prev => prev * 0.5);
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
         );
@@ -94,6 +91,10 @@ const CanvasArea: React.FC<PickerProps> = ({
           const [imageScaledWidth, imageScaledHeight] =
             findCorrectSize(loadedImage);
           ctx.drawImage(loadedImage, 0, 0, imageScaledWidth, imageScaledHeight);
+
+          console.log(
+            getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
+          );
         };
       };
     }
@@ -147,13 +148,11 @@ const CanvasArea: React.FC<PickerProps> = ({
 
     canvas.onmousedown = event => {
       setIsMouseDown(true);
-      console.log(event.clientX, event.clientY, mouseX, mouseY);
       setMouseX(event.clientX);
       setMouseY(event.clientY);
     };
 
     canvas.onmouseup = event => {
-      console.log(event.clientX - mouseX);
       setImageStartX(prev => prev + event.clientX - mouseX);
       setImageStartY(prev => prev + event.clientY - mouseY);
 
@@ -167,7 +166,6 @@ const CanvasArea: React.FC<PickerProps> = ({
       const { x: xOffset, y: yOffset } = ctx.canvas.getBoundingClientRect();
       setCursorX(event.pageX - xOffset);
       setCursorY(event.pageY - yOffset);
-      console.log(event.pageX - xOffset);
 
       if (isMouseDown) {
         const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -220,15 +218,12 @@ const CanvasArea: React.FC<PickerProps> = ({
           128,
           128
         ).data;
-        console.log(imageData);
         break;
       }
       case ToolActions.CirclePick: {
-        console.log('circl pick');
         break;
       }
       default: {
-        console.log('Nothing selected');
       }
     }
   };

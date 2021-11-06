@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { ToolActions } from '../Picker/Picker';
 import Stepper from '../Stepper/Stepper';
 import * as Styled from './ToolBar.styles';
 
