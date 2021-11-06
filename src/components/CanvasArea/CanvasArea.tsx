@@ -8,31 +8,41 @@ type PickerProps = {
   setPickedColor: (color: string) => void;
   action?: ToolActions;
   setAction: (newAction: ToolActions) => void;
+  pickerSize: number;
 };
 
 const CanvasArea: React.FC<PickerProps> = ({
   setPickedColor,
   action,
   setAction,
+  pickerSize,
 }) => {
   const canvasRef = useRef(null);
+  const cursorRef = useRef(null);
+  const [cursorX, setCursorX] = useState(0);
+  const [cursorY, setCursorY] = useState(0);
   const fileInput = useRef<HTMLInputElement>(null);
   const [isDropActive, setIsDropActive] = useState(false);
   const [image, setImage] = useState<CanvasImageSource>();
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
+  const [currentScale, setCurrentScale] = useState(1);
 
   const [imageStartX, setImageStartX] = useState(0);
   const [imageStartY, setImageStartY] = useState(0);
 
   useEffect(() => {
+    console.log(action);
     const canvas: HTMLCanvasElement =
       canvasRef.current as unknown as HTMLCanvasElement;
     if (canvas) {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
       if (action === ToolActions.ZoomIn) {
+        clearCanvas(ctx);
+        ctx.imageSmoothingEnabled = false;
         ctx.scale(2, 2);
+        setCurrentScale(prev => prev * 2);
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
         );
@@ -43,8 +53,11 @@ const CanvasArea: React.FC<PickerProps> = ({
           imageScaledWidth,
           imageScaledHeight
         );
+        setAction(ToolActions.None);
       } else if (action === ToolActions.ZoomOut) {
+        clearCanvas(ctx);
         ctx.scale(0.5, 0.5);
+        setCurrentScale(prev => prev * 0.5);
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
         );
@@ -55,9 +68,9 @@ const CanvasArea: React.FC<PickerProps> = ({
           imageScaledWidth,
           imageScaledHeight
         );
+        setAction(ToolActions.None);
       }
     }
-    setAction(ToolActions.None);
   }, [action, image, setAction]);
 
   const handleInputChange = (input: any) => {
@@ -87,20 +100,25 @@ const CanvasArea: React.FC<PickerProps> = ({
   }, []);
 
   const findCorrectSize = (image: HTMLImageElement) => {
-    const ratio = 750 / image.width;
+    if (image.width < 700 && image.height < 450) {
+      return [image.width, image.height];
+    }
+    const ratio = 700 / image.width;
     const width = image.width * ratio;
     const height = image.height * ratio;
     return [width, height];
   };
 
+  const clearCanvas = (ctx: CanvasRenderingContext2D) => {
+    ctx.fillStyle = CANVAS_BASE_COLOR;
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  };
+
   useEffect(() => {
     const canvas: HTMLCanvasElement =
       canvasRef.current as unknown as HTMLCanvasElement;
-    if (canvas) {
-      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      ctx.fillStyle = CANVAS_BASE_COLOR;
-      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    }
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    clearCanvas(ctx);
   }, []);
 
   useEffect(() => {
@@ -143,13 +161,21 @@ const CanvasArea: React.FC<PickerProps> = ({
     };
 
     canvas.onmousemove = event => {
+      const canvas: HTMLCanvasElement =
+        canvasRef.current as unknown as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      const { x: xOffset, y: yOffset } = ctx.canvas.getBoundingClientRect();
+      setCursorX(event.pageX - xOffset);
+      setCursorY(event.pageY - yOffset);
+      console.log(event.pageX - xOffset);
+
       if (isMouseDown) {
         const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-        ctx.fillStyle = CANVAS_BASE_COLOR;
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
         );
+        clearCanvas(ctx);
+
         ctx.drawImage(
           image as CanvasImageSource,
           event.clientX - mouseX + imageStartX,
@@ -174,16 +200,37 @@ const CanvasArea: React.FC<PickerProps> = ({
       canvasRef.current as unknown as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const { x: xOffset, y: yOffset } = ctx.canvas.getBoundingClientRect();
-
-    const imageData = ctx.getImageData(
-      event.pageX - xOffset,
-      event.pageY - yOffset,
-      1,
-      1
-    ).data;
-    const color =
-      'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
-    setPickedColor(color.toString());
+    switch (action) {
+      case ToolActions.PixelPick: {
+        const imageData = ctx.getImageData(
+          event.pageX - xOffset,
+          event.pageY - yOffset,
+          1,
+          1
+        ).data;
+        const color =
+          'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
+        setPickedColor(color.toString());
+        break;
+      }
+      case ToolActions.SquarePick: {
+        const imageData = ctx.getImageData(
+          event.pageX - xOffset,
+          event.pageY - yOffset,
+          128,
+          128
+        ).data;
+        console.log(imageData);
+        break;
+      }
+      case ToolActions.CirclePick: {
+        console.log('circl pick');
+        break;
+      }
+      default: {
+        console.log('Nothing selected');
+      }
+    }
   };
 
   const handleButtonClick = (event: any) => {
@@ -199,12 +246,24 @@ const CanvasArea: React.FC<PickerProps> = ({
         style={{ display: 'none' }}
         onChange={handleInputChange}
       />
-      <canvas
-        ref={canvasRef}
-        onClick={handleCanvasClick}
-        width={700}
-        height={450}
-      />
+      <Styled.CanvasWrapper>
+        <canvas
+          ref={canvasRef}
+          onClick={handleCanvasClick}
+          width={700}
+          height={450}
+        />
+        <Styled.Cursor
+          style={{
+            top: cursorY,
+            left: cursorX,
+            width: pickerSize,
+            height: pickerSize,
+            borderRadius: `${action === ToolActions.CirclePick ? '50%' : '0'}`,
+          }}
+          ref={cursorRef}
+        />
+      </Styled.CanvasWrapper>
     </Styled.Wrapper>
   );
 };

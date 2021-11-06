@@ -19,20 +19,34 @@ export enum ToolActions {
 const Picker: React.FC<PickerProps> = () => {
   const [pickedColor, setPickedColor] = useState('');
   const [action, setAction] = useState<ToolActions>(ToolActions.None);
+  const [pickerSize, setPickerSize] = useState(1);
 
   const handlePickedColor = (color: string) => {
     setPickedColor(color);
   };
 
   const handleZoomIn = () => {
-    console.log('Handle zoom click');
-
     setAction(ToolActions.ZoomIn);
   };
 
   const handleZoomOut = () => {
-    console.log('Handle zoom click');
     setAction(ToolActions.ZoomOut);
+  };
+
+  const handleMove = () => {
+    setAction(ToolActions.Move);
+  };
+
+  const handlePickPixel = () => {
+    setAction(ToolActions.PixelPick);
+  };
+
+  const handlePickSquare = () => {
+    setAction(ToolActions.SquarePick);
+  };
+
+  const handlePickEclipse = () => {
+    setAction(ToolActions.CirclePick);
   };
 
   const handleSetAction = (newAction: ToolActions) => {
@@ -46,8 +60,18 @@ const Picker: React.FC<PickerProps> = () => {
           setPickedColor={handlePickedColor}
           action={action}
           setAction={handleSetAction}
+          pickerSize={pickerSize}
         />
-        <ToolBar handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />
+        <ToolBar
+          handleZoomIn={handleZoomIn}
+          handleZoomOut={handleZoomOut}
+          handleMove={handleMove}
+          handlePickPixel={handlePickPixel}
+          handlePickSquare={handlePickSquare}
+          handlePickEclipse={handlePickEclipse}
+          pickerSize={pickerSize}
+          handlePickerSize={setPickerSize}
+        />
       </Styled.LeftSection>
       <button onClick={handleZoomIn}>Zomm in</button>
       <button onClick={handleZoomOut}>Zomm out</button>
