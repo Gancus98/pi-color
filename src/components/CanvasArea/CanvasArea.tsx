@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { getImageColorsPalette } from '../../utils/imagePalete';
 import * as Styled from '../CanvasArea/CanvasArea.styles';
 import { ToolActions } from '../Picker/Picker';
@@ -10,6 +17,7 @@ type PickerProps = {
   action?: ToolActions;
   setAction: (newAction: ToolActions) => void;
   pickerSize: number;
+  handlePaletteColors: Dispatch<SetStateAction<string[]>>;
 };
 
 const CanvasArea: React.FC<PickerProps> = ({
@@ -17,6 +25,7 @@ const CanvasArea: React.FC<PickerProps> = ({
   action,
   setAction,
   pickerSize,
+  handlePaletteColors,
 }) => {
   const canvasRef = useRef(null);
   const cursorRef = useRef(null);
@@ -92,7 +101,10 @@ const CanvasArea: React.FC<PickerProps> = ({
             findCorrectSize(loadedImage);
           ctx.drawImage(loadedImage, 0, 0, imageScaledWidth, imageScaledHeight);
 
-          console.log(
+          // console.log(
+          //   getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
+          // );
+          handlePaletteColors(
             getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
           );
         };

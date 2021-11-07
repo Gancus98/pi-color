@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CanvasArea from '../CanvasArea/CanvasArea';
 import ColorInfo from '../ColorInfo/ColorInfo';
+import ImagePalette from '../ImagePalette/ImagePalette';
 import ToolBar from '../ToolBar/ToolBar';
 import * as Styled from './Picker.styles';
 
@@ -20,6 +21,7 @@ const Picker: React.FC<PickerProps> = () => {
   const [pickedColor, setPickedColor] = useState('');
   const [action, setAction] = useState<ToolActions>(ToolActions.None);
   const [pickerSize, setPickerSize] = useState(1);
+  const [imagePaletteColors, setImagePaletteColors] = useState<string[]>([]);
 
   const handlePickedColor = (color: string) => {
     setPickedColor(color);
@@ -56,22 +58,26 @@ const Picker: React.FC<PickerProps> = () => {
   return (
     <Styled.PickerWrapper>
       <Styled.LeftSection>
-        <CanvasArea
-          setPickedColor={handlePickedColor}
-          action={action}
-          setAction={handleSetAction}
-          pickerSize={pickerSize}
-        />
-        <ToolBar
-          handleZoomIn={handleZoomIn}
-          handleZoomOut={handleZoomOut}
-          handleMove={handleMove}
-          handlePickPixel={handlePickPixel}
-          handlePickSquare={handlePickSquare}
-          handlePickEclipse={handlePickEclipse}
-          pickerSize={pickerSize}
-          handlePickerSize={setPickerSize}
-        />
+        <Styled.MainContainer>
+          <CanvasArea
+            setPickedColor={handlePickedColor}
+            action={action}
+            setAction={handleSetAction}
+            pickerSize={pickerSize}
+            handlePaletteColors={setImagePaletteColors}
+          />
+          <ToolBar
+            handleZoomIn={handleZoomIn}
+            handleZoomOut={handleZoomOut}
+            handleMove={handleMove}
+            handlePickPixel={handlePickPixel}
+            handlePickSquare={handlePickSquare}
+            handlePickEclipse={handlePickEclipse}
+            pickerSize={pickerSize}
+            handlePickerSize={setPickerSize}
+          />
+        </Styled.MainContainer>
+        <ImagePalette imageColors={imagePaletteColors} />
       </Styled.LeftSection>
       <ColorInfo color={pickedColor} />
     </Styled.PickerWrapper>

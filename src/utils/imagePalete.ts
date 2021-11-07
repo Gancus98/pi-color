@@ -20,7 +20,7 @@ export const getImageColorsPalette = (ctx: CanvasRenderingContext2D, imageWidth:
         i+=1;
     }
     const colorsPalette = buckets.map(pixelsBucket => pixelsAvgColor(pixelsBucket))
-    return colorsPalette
+    return colorsPalette.map(color => `rgb(${color[0]}, ${color[1]}, ${color[2]})`)
 }
 
 const maxValue = (array: Array<number>) => array.reduce((max: number, v: number) => max >= v ? max : v);

@@ -8,7 +8,17 @@ export const PickerWrapper = styled.div`
 `;
 
 export const LeftSection = styled.div`
-  width: 50%;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  display: flex;
+`;
+
+export const MainContainer = styled.div`
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
