@@ -39,6 +39,7 @@ export const CanvasWrapper = styled.div`
   width: 700px;
   height: 450px;
   position: relative;
+  overflow: hidden;
 `;
 
 export const Cursor = styled.div`

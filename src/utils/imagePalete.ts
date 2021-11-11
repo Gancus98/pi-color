@@ -1,3 +1,5 @@
+import { createPixelsArray, pixelsAvgColor } from "./manipulateImageArrays";
+
 export const getImageColorsPalette = (ctx: CanvasRenderingContext2D, imageWidth: number, imageHeight: number) => {
     console.log("palette")
     const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight).data;
@@ -41,7 +43,6 @@ const splitPixels = (pixelsArray: number[][]) => {
     const redRange = maxValue(redPixels) - minValue(redPixels);
     const greenRange = maxValue(greenPixels) - minValue(greenPixels);
     const blueRange = maxValue(bluePixels) - minValue(bluePixels);
-    // console.log(redRange, greenRange, blueRange)
 
     let sortColor = 0;
     if (redRange >= greenRange && redRange >= blueRange) {
@@ -66,26 +67,4 @@ const splitPixels = (pixelsArray: number[][]) => {
     const secondHalf = pixelsArray.slice(-half)
 
     return [firstHalf, secondHalf]
-}
-
-const createPixelsArray = (imageData: Uint8ClampedArray) => {
-    const pixels = [];
-    for (let x = 0; x < imageData.length; x+=4) {
-        pixels.push([imageData[x],imageData[x+1],imageData[x+2]])
-    }
-    return pixels;
-}
-
-const pixelsAvgColor = (pixels: number[][]) => {
-    const totalPixelsNumber = pixels.length;
-    let redPixelsSum = 0;
-    let greenPixelsSum = 0;
-    let bluePixelsSum = 0;
-    pixels.forEach((pixel) => {
-        redPixelsSum += pixel[0];
-        greenPixelsSum += pixel[1];
-        bluePixelsSum += pixel[2];
-    })
-    const avgPixelColor = [Math.round(redPixelsSum/totalPixelsNumber), Math.round(greenPixelsSum/totalPixelsNumber), Math.round(bluePixelsSum/totalPixelsNumber)]
-    return avgPixelColor
 }

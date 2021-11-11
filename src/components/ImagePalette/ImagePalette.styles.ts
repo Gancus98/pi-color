@@ -11,5 +11,6 @@ export const Wrapper = styled.div`
 
 export const ButtonsWrapper = styled.div`
     display: flex;
+    margin-bottom: 0;
     justify-content: space-between;
 `

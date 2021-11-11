@@ -6,6 +6,7 @@ interface Props {
 
 export const Wrapper = styled.div<Props>`
     width: 160px;
-    height: 56px;
+    height: 156px;
     background-color: ${p => p.color};
+
 `;

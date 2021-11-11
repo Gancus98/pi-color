@@ -7,6 +7,11 @@ import React, {
   useState,
 } from 'react';
 import { getImageColorsPalette } from '../../utils/imagePalete';
+import {
+  createPixelsArray,
+  pixelsAvgColor,
+  reduceToEclipse,
+} from '../../utils/manipulateImageArrays';
 import * as Styled from '../CanvasArea/CanvasArea.styles';
 import { ToolActions } from '../Picker/Picker';
 
@@ -218,8 +223,7 @@ const CanvasArea: React.FC<PickerProps> = ({
           1,
           1
         ).data;
-        const color =
-          'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
+        const color = +imageData[0] + ',' + imageData[1] + ',' + imageData[2];
         setPickedColor(color.toString());
         break;
       }
@@ -227,12 +231,25 @@ const CanvasArea: React.FC<PickerProps> = ({
         const imageData = ctx.getImageData(
           event.pageX - xOffset,
           event.pageY - yOffset,
-          128,
-          128
+          pickerSize,
+          pickerSize
         ).data;
+        const pixels = createPixelsArray(imageData);
+        const color = pixelsAvgColor(pixels);
+        setPickedColor(color.toString());
         break;
       }
       case ToolActions.CirclePick: {
+        const imageData = ctx.getImageData(
+          event.pageX - xOffset,
+          event.pageY - yOffset,
+          pickerSize,
+          pickerSize
+        ).data;
+        const pixels = createPixelsArray(imageData);
+        const pixelsInEclipse = reduceToEclipse(pixels, pickerSize / 2);
+        const color = pixelsAvgColor(pixelsInEclipse);
+        setPickedColor(color.toString());
         break;
       }
       default: {
