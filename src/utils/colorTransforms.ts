@@ -110,3 +110,7 @@ const COLORS = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff",
             return "HTML color dont exist"
         }
     };
+
+    export const generatePaletteFromOneColor = (r: number,g: number,b: number) => {
+        return [255-r, 255-g, 255-b]
+    }

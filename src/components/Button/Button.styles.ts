@@ -10,4 +10,5 @@ export const Button = styled.button`
     &:hover {
         background-color: ${colors.secondaryHover};
     }
+    border-radius: 16px;
 `;

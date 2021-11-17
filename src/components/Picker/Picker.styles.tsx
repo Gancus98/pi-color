@@ -17,6 +17,17 @@ export const LeftSection = styled.div`
   display: flex;
 `;
 
+export const RightSection = styled.div`
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: goldenrod;
+  display: flex;
+`;
+
 export const MainContainer = styled.div`
   width: 100%;
   height: 100%;

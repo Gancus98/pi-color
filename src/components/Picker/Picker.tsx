@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CanvasArea from '../CanvasArea/CanvasArea';
 import ColorInfo from '../ColorInfo/ColorInfo';
 import ImagePalette from '../ImagePalette/ImagePalette';
+import PaletteGenerator from '../PaletteGenerator/PaletteGenerator';
 import ToolBar from '../ToolBar/ToolBar';
 import * as Styled from './Picker.styles';
 
@@ -79,7 +80,10 @@ const Picker: React.FC<PickerProps> = () => {
         </Styled.MainContainer>
         <ImagePalette imageColors={imagePaletteColors} />
       </Styled.LeftSection>
-      <ColorInfo color={pickedColor} />
+      <Styled.RightSection>
+        <ColorInfo color={pickedColor} />
+        <PaletteGenerator color={pickedColor}></PaletteGenerator>
+      </Styled.RightSection>
     </Styled.PickerWrapper>
   );
 };
