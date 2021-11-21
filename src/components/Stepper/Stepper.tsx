@@ -23,7 +23,7 @@ const NavButton: React.FC<StepperProps> = ({
       </Styled.TopWrapper>
       <Styled.Stepper
         type="range"
-        min="1"
+        min="2"
         max="100"
         value={pickerSize}
         onChange={handlePickerSizeChange}

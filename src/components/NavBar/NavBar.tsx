@@ -18,9 +18,21 @@ const NavBar: React.FC<NavBarProps> = ({ isPickerView, handleSetPicker }) => {
 
   return (
     <Styled.NavWrapper>
+      <Styled.LogoWrapper>
+        <Styled.Logo src="/logo512.png" />
+        <Styled.Title>Color</Styled.Title>
+      </Styled.LogoWrapper>
       <Styled.NavButtonsWrapper>
-        <NavButton onClick={openPicker} buttonText="Picker" />
-        <NavButton onClick={openLibrary} buttonText="Library" />
+        <NavButton
+          onClick={openPicker}
+          active={isPickerView && true}
+          buttonText="Picker"
+        />
+        <NavButton
+          onClick={openLibrary}
+          active={isPickerView === false ? true : false}
+          buttonText="Library"
+        />
       </Styled.NavButtonsWrapper>
     </Styled.NavWrapper>
   );

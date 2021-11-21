@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
+import { ToolActions } from '../Picker/Picker';
 import Stepper from '../Stepper/Stepper';
+import Tool from '../Tool/Tool';
 import * as Styled from './ToolBar.styles';
 
 type ToolBarProps = {
@@ -11,6 +13,7 @@ type ToolBarProps = {
   handlePickEclipse: () => void;
   pickerSize: number;
   handlePickerSize: Dispatch<SetStateAction<number>>;
+  action?: ToolActions;
 };
 
 const ToolBar: React.FC<ToolBarProps> = ({
@@ -22,8 +25,10 @@ const ToolBar: React.FC<ToolBarProps> = ({
   handlePickEclipse,
   pickerSize,
   handlePickerSize,
+  action,
 }) => {
   const [showStepper, setShowStepper] = useState(false);
+  console.log(action);
 
   const handleZoomInClick = () => {
     handleZoomIn();
@@ -53,20 +58,55 @@ const ToolBar: React.FC<ToolBarProps> = ({
     setShowStepper(true);
   };
 
+  const tools = [
+    {
+      toolAction: '',
+      alt: 'zoom in icon',
+      src: '/img/zoomIn.png',
+      action: handleZoomInClick,
+    },
+    {
+      toolAction: '',
+      alt: 'zoom out icon',
+      src: '/img/zoomOut.png',
+      action: handleZoomOutClick,
+    },
+    {
+      toolAction: ToolActions.Move,
+      alt: 'move',
+      src: '/img/moveImg.png',
+      action: handleMoveClick,
+    },
+    {
+      toolAction: ToolActions.PixelPick,
+      alt: 'pixel picker',
+      src: '/img/pixelPicker.png',
+      action: handlePickPixelClick,
+    },
+    {
+      toolAction: ToolActions.SquarePick,
+      alt: 'square picker',
+      src: '/img/squarePicker.png',
+      action: handlePickSquareClick,
+    },
+    {
+      toolAction: ToolActions.CirclePick,
+      alt: 'eclipse picker',
+      src: '/img/eclipsePicker.png',
+      action: handlePickEclipseClick,
+    },
+  ];
+
   return (
     <Styled.ToolBarWrapper>
-      <Styled.ToolWrapper onClick={handleZoomInClick}>Zin</Styled.ToolWrapper>
-      <Styled.ToolWrapper onClick={handleZoomOutClick}>Zout</Styled.ToolWrapper>
-      <Styled.ToolWrapper onClick={handleMoveClick}>Move</Styled.ToolWrapper>
-      <Styled.ToolWrapper onClick={handlePickPixelClick}>
-        Pix
-      </Styled.ToolWrapper>
-      <Styled.ToolWrapper onClick={handlePickSquareClick}>
-        Sq
-      </Styled.ToolWrapper>
-      <Styled.ToolWrapper onClick={handlePickEclipseClick}>
-        Ec
-      </Styled.ToolWrapper>
+      {tools.map(tool => (
+        <Tool
+          src={tool.src}
+          alt={tool.alt}
+          onClick={tool.action}
+          isActive={action === tool.toolAction}
+        />
+      ))}
       {showStepper && (
         <Stepper pickerSize={pickerSize} handlePickerSize={handlePickerSize} />
       )}

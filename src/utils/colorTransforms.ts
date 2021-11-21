@@ -15,7 +15,8 @@ export const rgbToCmyk = (r: number,g: number,b: number) => {
     const cyan = (1 - r01 - black) / (1 - black)
     const magenta = (1 - g01 - black) / (1 -black)
     const yellow = (1- b01 - black) / (1-black)
-    return [Math.round(cyan*100), Math.round(magenta*100), Math.round(yellow*100), Math.round(black*100)].toString()
+    const values = [Math.round(cyan*100), Math.round(magenta*100), Math.round(yellow*100), Math.round(black*100)]
+    return `(${values[0]}%, ${values[1]}%, ${values[2]}%, ${values[3]}%)`
 };
 
 export const rgbToHSV = (r: number,g: number,b: number) => {
@@ -40,7 +41,9 @@ export const rgbToHSV = (r: number,g: number,b: number) => {
     if (c !== 0) {
         S = c/V;
     }
-    return [Math.round(H),Math.round(S*100),Math.round(V*100)].toString()
+    
+    const values = [Math.round(H),Math.round(S*100),Math.round(V*100)];
+    return `(${values[0]}°, ${values[1]}%, ${values[2]}%)`
 };
 
 export const rgbToHSL = (r: number,g: number,b: number) => {
@@ -66,7 +69,8 @@ export const rgbToHSL = (r: number,g: number,b: number) => {
     if (c !== 0) {
         S = c / (1 - Math.abs(2*L-1));
     }
-    return [Math.round(H),Math.round(S*100),Math.round(L*100)].toString()
+    const values =  [Math.round(H),Math.round(S*100),Math.round(L*100)];
+    return `(${values[0]}°, ${values[1]}%, ${values[2]}%)`
 };
 
 const COLORS = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",

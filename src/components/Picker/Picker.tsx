@@ -21,9 +21,8 @@ export enum ToolActions {
 const Picker: React.FC<PickerProps> = () => {
   const [pickedColor, setPickedColor] = useState('');
   const [action, setAction] = useState<ToolActions>(ToolActions.None);
-  const [pickerSize, setPickerSize] = useState(1);
+  const [pickerSize, setPickerSize] = useState(2);
   const [imagePaletteColors, setImagePaletteColors] = useState<string[]>([]);
-
   const handlePickedColor = (color: string) => {
     setPickedColor(color);
   };
@@ -60,29 +59,34 @@ const Picker: React.FC<PickerProps> = () => {
     <Styled.PickerWrapper>
       <Styled.LeftSection>
         <Styled.MainContainer>
-          <CanvasArea
-            setPickedColor={handlePickedColor}
-            action={action}
-            setAction={handleSetAction}
-            pickerSize={pickerSize}
-            handlePaletteColors={setImagePaletteColors}
-          />
-          <ToolBar
-            handleZoomIn={handleZoomIn}
-            handleZoomOut={handleZoomOut}
-            handleMove={handleMove}
-            handlePickPixel={handlePickPixel}
-            handlePickSquare={handlePickSquare}
-            handlePickEclipse={handlePickEclipse}
-            pickerSize={pickerSize}
-            handlePickerSize={setPickerSize}
-          />
+          <Styled.MainWrapper>
+            <CanvasArea
+              setPickedColor={handlePickedColor}
+              action={action}
+              setAction={handleSetAction}
+              pickerSize={pickerSize}
+              handlePaletteColors={setImagePaletteColors}
+            />
+            <ToolBar
+              handleZoomIn={handleZoomIn}
+              handleZoomOut={handleZoomOut}
+              handleMove={handleMove}
+              handlePickPixel={handlePickPixel}
+              handlePickSquare={handlePickSquare}
+              handlePickEclipse={handlePickEclipse}
+              pickerSize={pickerSize}
+              handlePickerSize={setPickerSize}
+              action={action}
+            />
+          </Styled.MainWrapper>
+          <ImagePalette imageColors={imagePaletteColors} />
         </Styled.MainContainer>
-        <ImagePalette imageColors={imagePaletteColors} />
       </Styled.LeftSection>
       <Styled.RightSection>
-        <ColorInfo color={pickedColor} />
-        <PaletteGenerator color={pickedColor}></PaletteGenerator>
+        <ColorInfo color={!!pickedColor ? pickedColor : '255,255,255'} />
+        <PaletteGenerator
+          color={!!pickedColor ? pickedColor : '255,255,255'}
+        ></PaletteGenerator>
       </Styled.RightSection>
     </Styled.PickerWrapper>
   );

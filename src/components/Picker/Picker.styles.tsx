@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { colors } from '../../utils/theme';
 
 export const PickerWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: antiquewhite;
   display: flex;
+  background-color: ${colors.background};
 `;
 
 export const LeftSection = styled.div`
@@ -13,7 +14,6 @@ export const LeftSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray;
   display: flex;
 `;
 
@@ -24,17 +24,29 @@ export const RightSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: goldenrod;
   display: flex;
 `;
 
-export const MainContainer = styled.div`
-  width: 100%;
-  height: 100%;
+export const MainWrapper = styled.div`
+  padding: 16px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+
   display: flex;
+  margin: 4px;
+`;
+
+export const MainContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${colors.primary};
+  border: 1px solid ${colors.shadowColor};
+  background-color: ${colors.secondaryLight};
+  box-shadow: 0 0 16px 0 ${colors.shadowColor};
+  border-radius: 16px;
+  margin-right: -32px;
 `;

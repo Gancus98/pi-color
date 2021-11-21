@@ -105,10 +105,6 @@ const CanvasArea: React.FC<PickerProps> = ({
           const [imageScaledWidth, imageScaledHeight] =
             findCorrectSize(loadedImage);
           ctx.drawImage(loadedImage, 0, 0, imageScaledWidth, imageScaledHeight);
-
-          // console.log(
-          //   getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
-          // );
           handlePaletteColors(
             getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
           );
@@ -263,30 +259,37 @@ const CanvasArea: React.FC<PickerProps> = ({
 
   return (
     <Styled.Wrapper active={isDropActive}>
-      <Styled.Button onClick={handleButtonClick}>Upload a file</Styled.Button>
-      <input
-        type="file"
-        ref={fileInput}
-        style={{ display: 'none' }}
-        onChange={handleInputChange}
-      />
-      <Styled.CanvasWrapper>
+      <Styled.ButtonWrapper>
+        <Styled.Button onClick={handleButtonClick}>Upload a file</Styled.Button>
+        <input
+          type="file"
+          ref={fileInput}
+          style={{ display: 'none' }}
+          onChange={handleInputChange}
+        />
+      </Styled.ButtonWrapper>
+      <Styled.CanvasWrapper action={action} active={isDropActive}>
         <canvas
           ref={canvasRef}
           onClick={handleCanvasClick}
           width={700}
           height={450}
         />
-        <Styled.Cursor
-          style={{
-            top: cursorY,
-            left: cursorX,
-            width: pickerSize,
-            height: pickerSize,
-            borderRadius: `${action === ToolActions.CirclePick ? '50%' : '0'}`,
-          }}
-          ref={cursorRef}
-        />
+        {(action === ToolActions.SquarePick ||
+          action === ToolActions.CirclePick) && (
+          <Styled.Cursor
+            style={{
+              top: cursorY,
+              left: cursorX,
+              width: pickerSize,
+              height: pickerSize,
+              borderRadius: `${
+                action === ToolActions.CirclePick ? '50%' : '0'
+              }`,
+            }}
+            ref={cursorRef}
+          />
+        )}
       </Styled.CanvasWrapper>
     </Styled.Wrapper>
   );

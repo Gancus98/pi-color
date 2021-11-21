@@ -6,7 +6,9 @@ export const Wrapper = styled.div`
     gap: 8px;
     width: 100px;
     height: 100%;
-    background-color: gainsboro;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
 `;
 
 export const ButtonsWrapper = styled.div`

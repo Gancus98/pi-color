@@ -1,11 +1,7 @@
 import React from 'react';
 import {
   generatePaletteFromOneColor,
-  getHTMLColorName,
-  rgbToCmyk,
   rgbToHex,
-  rgbToHSL,
-  rgbToHSV,
 } from '../../utils/colorTransforms';
 import Button from '../Button/Button';
 import ColorTile from '../ColorTile/ColorTile';
@@ -30,17 +26,19 @@ const PaletteGenerator: React.FC<PaletteGeneratorProps> = ({ color }) => {
 
   return (
     <Styled.Wrapper color={rgbToHex(rValue, gValue, bValue)}>
-      <Button
-        onClick={() => {
-          console.log('hello');
-        }}
-      >
-        Generate
-      </Button>
-      <Styled.TilesWrapper>
-        <ColorTile color={`rgb(${rValue},${gValue},${bValue})`}></ColorTile>
-        <ColorTile color={complementaryColor}></ColorTile>
-      </Styled.TilesWrapper>
+      <Styled.WindowWrapper>
+        <Button
+          onClick={() => {
+            console.log('hello');
+          }}
+        >
+          Generate
+        </Button>
+        <Styled.TilesWrapper>
+          <ColorTile color={`rgb(${rValue},${gValue},${bValue})`}></ColorTile>
+          <ColorTile color={complementaryColor}></ColorTile>
+        </Styled.TilesWrapper>
+      </Styled.WindowWrapper>
     </Styled.Wrapper>
   );
 };
