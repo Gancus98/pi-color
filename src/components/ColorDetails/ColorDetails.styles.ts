@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
+  transition: 2s all;
 `;
 
 export const DescriptionWrapper = styled.div`

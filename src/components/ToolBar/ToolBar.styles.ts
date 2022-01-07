@@ -9,6 +9,10 @@ export const ToolBarWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 16px;
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 36px;
+  }
 `;
 
 export const ToolWrapper = styled.div`

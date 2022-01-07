@@ -6,6 +6,8 @@ export const TilesWrapper = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
+    gap: 16px;
+    color: ${colors.text}
 `
 
 export const Wrapper = styled.div`
@@ -27,3 +29,9 @@ export const WindowWrapper = styled.div`
   box-shadow: 0 0 16px 0 ${colors.shadowColor};
   border-radius:16px;
 `;
+
+export const Title = styled.p`
+color: ${colors.text};
+font-size: 16px;
+font-weight: bold;
+`

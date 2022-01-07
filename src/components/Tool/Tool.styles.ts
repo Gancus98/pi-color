@@ -20,10 +20,18 @@ export const Wrapper = styled.div<ToolProps>`
     transform: scale(1.2) translateY(-10%);
   }
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 32px;
+  height: 32px;
+  }
 `;
 
 export const IconImg = styled.img`
   width: 40px;
   height: 40px;
   object-fit: cover;
+  @media (max-width: 768px) {
+    width: 28px;
+  height: 28px;
+  }
 `;

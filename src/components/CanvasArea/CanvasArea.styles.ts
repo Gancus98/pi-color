@@ -9,11 +9,13 @@ interface Props {
 
 export const Input = styled.input`
     height:40px;
-    background-color: yellow;
     border: none;
     &.file-upload-button {
         background-color: red;
     }
+    @media (max-width: 768px) {
+        height:32px;
+  }
 `;
 
 export const Wrapper = styled.div<Props>`
@@ -25,6 +27,10 @@ export const Wrapper = styled.div<Props>`
     height: 494px;
     align-items: center;
     justify-content: center;
+    @media (max-width: 768px) {
+        width: 290px;
+        height: 250px;
+  }
 
 `;
 
@@ -40,6 +46,11 @@ export const Button = styled.button`
     &:hover {
         transform: scale(1.1)
     }
+    @media (max-width: 768px) {
+        width: 80px;
+        height: 32px;
+        font-size: 8px;
+  }
 `
 
 export const ButtonWrapper = styled.div`
@@ -47,6 +58,9 @@ export const ButtonWrapper = styled.div`
     height: 56px;
     display: flex;
     justify-content: center;
+    @media (max-width: 768px) {
+        height: 42px;
+  }
 `
 
 export const CanvasWrapper = styled.div<Props>`
@@ -63,6 +77,10 @@ export const CanvasWrapper = styled.div<Props>`
             else return 'auto'
             }};
     }
+    @media (max-width: 768px) {
+        width: 290px;
+        height: 250px;
+  }
 `;
 
 export const Cursor = styled.div`

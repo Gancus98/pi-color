@@ -16,10 +16,13 @@ export const NavButton = styled.button<NavButtonProps>`
     font-weight: bold;
     font-size: 16px;
     color: ${({active}) => active ? colors.secondaryLight : colors.text};
-    &:hover {
-        /* background-color: #ddd; */
-    }
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-   
+    @media (max-width: 768px) {
+    width: 86px;
+    height: 32px;
+    font-size: 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    } 
 `;

@@ -10,7 +10,10 @@ export const Button = styled.button`
     transition: 0.25s transform;
     &:hover {
         background-color: ${colors.primary};
-        /* transform: scale(1.2); */
     }
     border-radius: 16px;
+    @media (max-width: 768px) {
+    height: 24px;
+    padding: 8px 8px;
+  }
 `;

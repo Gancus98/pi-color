@@ -27,5 +27,6 @@ export const colors = {
     textGray: '#7a8585',
     text: '#cccccc',
     textWhite: '#ffffff',
+    error: '#ed4337'
 
 }

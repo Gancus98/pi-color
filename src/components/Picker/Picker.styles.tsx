@@ -6,6 +6,10 @@ export const PickerWrapper = styled.div`
   height: 100%;
   display: flex;
   background-color: ${colors.background};
+  @media (max-width: 1400px) {
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 export const LeftSection = styled.div`
@@ -15,6 +19,13 @@ export const LeftSection = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+  @media (max-width: 1400px) {
+    margin-top: 40px;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    margin-top: 16px;
+  }
 `;
 
 export const RightSection = styled.div`
@@ -25,18 +36,29 @@ export const RightSection = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+  @media (max-width: 1400px) {
+    margin-top: 40px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const MainWrapper = styled.div`
   padding: 16px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   display: flex;
   margin: 4px;
+  @media (max-width: 768px) {
+    padding: 4px;
+  }
 `;
 
 export const MainContainer = styled.div`
@@ -48,5 +70,7 @@ export const MainContainer = styled.div`
   background-color: ${colors.secondaryLight};
   box-shadow: 0 0 16px 0 ${colors.shadowColor};
   border-radius: 16px;
-  margin-right: -32px;
+  @media (max-width: 768px) {
+    width: 96%;
+  }
 `;

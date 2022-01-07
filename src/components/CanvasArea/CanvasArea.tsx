@@ -12,6 +12,7 @@ import {
   pixelsAvgColor,
   reduceToEclipse,
 } from '../../utils/manipulateImageArrays';
+import useWindowWidth from '../../utils/useWindowWidth';
 import * as Styled from '../CanvasArea/CanvasArea.styles';
 import { ToolActions } from '../Picker/Picker';
 
@@ -45,6 +46,8 @@ const CanvasArea: React.FC<PickerProps> = ({
 
   const [imageStartX, setImageStartX] = useState(0);
   const [imageStartY, setImageStartY] = useState(0);
+
+  const { width } = useWindowWidth();
 
   useEffect(() => {
     const canvas: HTMLCanvasElement =
@@ -272,8 +275,8 @@ const CanvasArea: React.FC<PickerProps> = ({
         <canvas
           ref={canvasRef}
           onClick={handleCanvasClick}
-          width={700}
-          height={450}
+          width={width > 768 ? 700 : 280}
+          height={width > 768 ? 450 : 220}
         />
         {(action === ToolActions.SquarePick ||
           action === ToolActions.CirclePick) && (

@@ -25,6 +25,32 @@ export const WindowWrapper = styled.div`
   border-radius:16px;
 `;
 
+export const HeaderWrapper = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+
+export const SaveWrapper = styled.div`
+display: flex;
+`
+
+export const SaveIcon = styled.img`
+height: 24px;
+  width: 24px;
+  cursor: pointer;
+  &:hover {
+  transform: scale(1.2)
+}
+`
+
+export const Save = styled.p`
+color: ${colors.text};
+font-size: 16px;
+font-weight: bold;
+margin-right: 8px;
+`
+
 export const MainWrapper = styled.div`
   display: flex;
   height: 100%;
@@ -34,10 +60,14 @@ export const MainWrapper = styled.div`
 `;
 
 export const Color = styled.div<Props>`
+    margin-top: 12px;
     width: 80px;
     border-radius: 16px;
-    height: 100%;
+    height: 94%;
     background-color: ${p => p.color};
+    @media (max-width: 1400px) {
+    height: 272px;
+  }
 `;
 
 export const ColorsInfoWrapper = styled.div`
