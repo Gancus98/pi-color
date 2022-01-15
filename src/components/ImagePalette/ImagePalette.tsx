@@ -11,11 +11,14 @@ const MIN_COLORS_NUMBER = 2;
 
 type ImagePaletteProps = {
   imageColors: string[];
+  setPickedColor: (color: string) => void;
 };
 
-const ImagePalette: React.FC<ImagePaletteProps> = ({ imageColors }) => {
+const ImagePalette: React.FC<ImagePaletteProps> = ({
+  imageColors,
+  setPickedColor,
+}) => {
   const [numberOfColors, setNumberOfColors] = useState(MAX_COLORS_NUMBER);
-  console.log(numberOfColors);
   const handleIncreasePalette = () => {
     setNumberOfColors(prev => {
       if (prev < MAX_COLORS_NUMBER) {
@@ -35,7 +38,6 @@ const ImagePalette: React.FC<ImagePaletteProps> = ({ imageColors }) => {
   };
 
   const handleSavePalette = () => {
-    console.log(imageColors.length);
     if (imageColors.length !== 0) {
       toast.success(`Palette saved successfully`, {
         position: 'bottom-left',
@@ -97,7 +99,11 @@ const ImagePalette: React.FC<ImagePaletteProps> = ({ imageColors }) => {
           {imageColors.map(
             (imgColor, index) =>
               index < numberOfColors && (
-                <ColorTile key={index} color={imgColor} />
+                <ColorTile
+                  key={index}
+                  color={imgColor}
+                  setPickedColor={setPickedColor}
+                />
               )
           )}
         </Styled.TilesWrapper>

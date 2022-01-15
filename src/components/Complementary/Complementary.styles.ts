@@ -7,7 +7,7 @@ export const TilesWrapper = styled.div`
     align-items: center;
     height: 100%;
     gap: 16px;
-    color: ${colors.text}
+    color: ${colors.text};
 `
 
 export const Wrapper = styled.div`

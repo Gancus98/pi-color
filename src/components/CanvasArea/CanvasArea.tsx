@@ -89,8 +89,13 @@ const CanvasArea: React.FC<PickerProps> = ({
 
   const handleInputChange = (input: any) => {
     if (input.target.files && input.target.files[0]) {
+      const canvas: HTMLCanvasElement =
+        canvasRef.current as unknown as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      clearCanvas(ctx);
       putFileOnCanvas(input.target.files[0]);
     }
+    input.target.value = '';
   };
 
   const putFileOnCanvas = useCallback((file: File) => {
@@ -128,7 +133,7 @@ const CanvasArea: React.FC<PickerProps> = ({
 
   const clearCanvas = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = CANVAS_BASE_COLOR;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(0, 0, 7000, 4500);
   };
 
   useEffect(() => {
@@ -157,6 +162,10 @@ const CanvasArea: React.FC<PickerProps> = ({
     };
 
     canvas.ondrop = event => {
+      const canvas: HTMLCanvasElement =
+        canvasRef.current as unknown as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      clearCanvas(ctx);
       event.preventDefault();
       putFileOnCanvas(event?.dataTransfer?.files[0] as File);
       setIsDropActive(false);
@@ -183,7 +192,7 @@ const CanvasArea: React.FC<PickerProps> = ({
       setCursorX(event.pageX - xOffset);
       setCursorY(event.pageY - yOffset);
 
-      if (isMouseDown) {
+      if (isMouseDown && action === ToolActions.Move) {
         const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
         const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
           image as HTMLImageElement
@@ -207,6 +216,7 @@ const CanvasArea: React.FC<PickerProps> = ({
     mouseY,
     imageStartX,
     imageStartY,
+    action,
   ]);
 
   const handleCanvasClick = (event: any) => {

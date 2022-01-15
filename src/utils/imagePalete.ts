@@ -1,7 +1,6 @@
 import { createPixelsArray, pixelsAvgColor } from "./manipulateImageArrays";
 
 export const getImageColorsPalette = (ctx: CanvasRenderingContext2D, imageWidth: number, imageHeight: number) => {
-    console.log("palette")
     const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight).data;
     const pixelsArray = createPixelsArray(imageData)
 

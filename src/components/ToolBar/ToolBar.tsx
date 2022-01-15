@@ -28,7 +28,6 @@ const ToolBar: React.FC<ToolBarProps> = ({
   action,
 }) => {
   const [showStepper, setShowStepper] = useState(false);
-  console.log(action);
 
   const handleZoomInClick = () => {
     handleZoomIn();

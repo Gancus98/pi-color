@@ -11,7 +11,6 @@ const NavButton: React.FC<StepperProps> = ({
   handlePickerSize,
 }) => {
   const handlePickerSizeChange = (event: React.FormEvent<HTMLInputElement>) => {
-    console.log(event.currentTarget.value);
     handlePickerSize(parseInt(event.currentTarget.value));
   };
 

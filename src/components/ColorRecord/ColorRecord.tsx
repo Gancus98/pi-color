@@ -24,16 +24,21 @@ const ColorRecord: React.FC<ColorRecordProps> = ({
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newName =
-      e.target.value.length > 0 ? e.target.value : 'Unnamed color';
-    setColorName(newName);
-    setNewColorName(recordKey, newName);
+    setColorName(e.target.value);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setIsEdited(false);
+      handleStopEdit();
     }
+  };
+
+  const handleStopEdit = () => {
+    setIsEdited(false);
+    setNewColorName(
+      recordKey,
+      colorName.length > 0 ? colorName : 'Undefined name'
+    );
   };
 
   return (
@@ -46,7 +51,7 @@ const ColorRecord: React.FC<ColorRecordProps> = ({
                 value={colorName}
                 onChange={handleNameChange}
                 onKeyDown={handleKeyDown}
-                onBlur={() => setIsEdited(false)}
+                onBlur={handleStopEdit}
                 autoFocus
               />
             ) : (

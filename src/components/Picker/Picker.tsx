@@ -3,8 +3,8 @@ import CanvasArea from '../CanvasArea/CanvasArea';
 import ColorInfo from '../ColorInfo/ColorInfo';
 import ImagePalette from '../ImagePalette/ImagePalette';
 import ToolBar from '../ToolBar/ToolBar';
+import Complementary from '../Complementary/Complementary';
 import * as Styled from './Picker.styles';
-import ComplementaryColor from '../ComplementaryColor/ComplementaryColor';
 
 type PickerProps = {};
 
@@ -79,14 +79,17 @@ const Picker: React.FC<PickerProps> = () => {
               action={action}
             />
           </Styled.MainWrapper>
-          <ImagePalette imageColors={imagePaletteColors} />
+          <ImagePalette
+            imageColors={imagePaletteColors}
+            setPickedColor={handlePickedColor}
+          />
         </Styled.MainContainer>
       </Styled.LeftSection>
       <Styled.RightSection>
         <ColorInfo color={!!pickedColor ? pickedColor : '255,255,255'} />
-        <ComplementaryColor
+        <Complementary
           color={!!pickedColor ? pickedColor : '255,255,255'}
-        ></ComplementaryColor>
+        ></Complementary>
       </Styled.RightSection>
     </Styled.PickerWrapper>
   );

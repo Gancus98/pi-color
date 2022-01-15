@@ -41,7 +41,9 @@ export const rgbToHSV = (r: number,g: number,b: number) => {
     if (c !== 0) {
         S = c/V;
     }
-    
+    if (H < 0) {
+        H = 360 + H
+    }
     const values = [Math.round(H),Math.round(S*100),Math.round(V*100)];
     return `(${values[0]}°, ${values[1]}%, ${values[2]}%)`
 };
@@ -68,6 +70,9 @@ export const rgbToHSL = (r: number,g: number,b: number) => {
     let S = 0;
     if (c !== 0) {
         S = c / (1 - Math.abs(2*L-1));
+    }
+    if (H < 0) {
+        H = 360 + H
     }
     const values =  [Math.round(H),Math.round(S*100),Math.round(L*100)];
     return `(${values[0]}°, ${values[1]}%, ${values[2]}%)`

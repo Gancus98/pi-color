@@ -4,13 +4,13 @@ import {
   rgbToHex,
 } from '../../utils/colorTransforms';
 import ColorTile, { TileSize } from '../ColorTile/ColorTile';
-import * as Styled from './ComplementaryColor';
+import * as Styled from './Complementary.styles';
 
-type ComplementaryColorProps = {
+type ComplementaryProps = {
   color: string;
 };
 
-const ComplementaryColor: React.FC<ComplementaryColorProps> = ({ color }) => {
+const Complementary: React.FC<ComplementaryProps> = ({ color }) => {
   const [r, g, b] = color.split(',');
   const rValue = parseInt(r);
   const gValue = parseInt(g);
@@ -48,4 +48,4 @@ const ComplementaryColor: React.FC<ComplementaryColorProps> = ({ color }) => {
   );
 };
 
-export default ComplementaryColor;
+export default Complementary;

@@ -12,24 +12,34 @@ type ColorTileProps = {
   color: string;
   size?: TileSize;
   label?: boolean;
+  setPickedColor?: (color: string) => void;
 };
 
 const ColorTile: React.FC<ColorTileProps> = ({
   color,
   size = TileSize.Normal,
   label = false,
+  setPickedColor,
 }) => {
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(color);
-    toast.success(`Color "${color}" copied to clipboard`, {
-      position: 'bottom-left',
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-    });
+    if (setPickedColor) {
+      const [r, g, b] = color.split(',');
+      const rValue = parseInt(r.replace('rgb(', ''));
+      const gValue = parseInt(g);
+      const bValue = parseInt(b.replace(')', ''));
+      setPickedColor(`${rValue},${gValue},${bValue}`);
+    } else {
+      navigator.clipboard.writeText(color);
+      toast.success(`Color "${color}" copied to clipboard`, {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+    }
   };
   return (
     <>
