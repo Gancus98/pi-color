@@ -98,28 +98,37 @@ const CanvasArea: React.FC<PickerProps> = ({
     input.target.value = '';
   };
 
-  const putFileOnCanvas = useCallback((file: File) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      let loadedImage = new Image();
-      reader.onload = () => {
-        loadedImage.src = reader.result?.toString() as string;
-        setImage(loadedImage);
-        loadedImage.onload = () => {
-          const canvas: HTMLCanvasElement =
-            canvasRef.current as unknown as HTMLCanvasElement;
-          const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-          const [imageScaledWidth, imageScaledHeight] =
-            findCorrectSize(loadedImage);
-          ctx.drawImage(loadedImage, 0, 0, imageScaledWidth, imageScaledHeight);
-          handlePaletteColors(
-            getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
-          );
+  const putFileOnCanvas = useCallback(
+    (file: File) => {
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        let loadedImage = new Image();
+        reader.onload = () => {
+          loadedImage.src = reader.result?.toString() as string;
+          setImage(loadedImage);
+          loadedImage.onload = () => {
+            const canvas: HTMLCanvasElement =
+              canvasRef.current as unknown as HTMLCanvasElement;
+            const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+            const [imageScaledWidth, imageScaledHeight] =
+              findCorrectSize(loadedImage);
+            ctx.drawImage(
+              loadedImage,
+              0,
+              0,
+              imageScaledWidth,
+              imageScaledHeight
+            );
+            handlePaletteColors(
+              getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
+            );
+          };
         };
-      };
-    }
-  }, []);
+      }
+    },
+    [handlePaletteColors]
+  );
 
   const findCorrectSize = (image: HTMLImageElement) => {
     if (image.width < 700 && image.height < 450) {

@@ -3,7 +3,6 @@ import './App.css';
 import Library from './components/Library/Library';
 import NavBar from './components/NavBar/NavBar';
 import Picker from './components/Picker/Picker';
-import { getAllColors } from './utils/dbHelper';
 
 function App() {
   const [isPickerView, setIsPickerView] = useState(true);
