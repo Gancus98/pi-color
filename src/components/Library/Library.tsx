@@ -18,7 +18,7 @@ type PaletteRecordType = {
 
 type LibraryProps = {};
 
-const Library: React.FC<LibraryProps> = ({}) => {
+const Library: React.FC<LibraryProps> = () => {
   const [colors, setColors] = useState<ColorRecordType[]>([]);
   const [palettes, setPalettes] = useState<PaletteRecordType[]>([]);
 
