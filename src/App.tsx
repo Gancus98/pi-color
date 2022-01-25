@@ -6,6 +6,11 @@ import Picker from './components/Picker/Picker';
 
 function App() {
   const [isPickerView, setIsPickerView] = useState(true);
+  const [image, setImage] = useState<CanvasImageSource>();
+
+  const handleSetImage = (image: CanvasImageSource) => {
+    setImage(image);
+  };
 
   const handleSetPicker = (state: boolean) => {
     setIsPickerView(state);
@@ -15,7 +20,14 @@ function App() {
     <div className="App">
       <NavBar isPickerView={isPickerView} handleSetPicker={handleSetPicker} />
       <div style={{ height: `calc(100% - 70px)` }}>
-        {isPickerView ? <Picker /> : <Library />}
+        {isPickerView ? (
+          <Picker
+            image={image as CanvasImageSource}
+            handleSetImage={handleSetImage}
+          />
+        ) : (
+          <Library />
+        )}
       </div>
     </div>
   );

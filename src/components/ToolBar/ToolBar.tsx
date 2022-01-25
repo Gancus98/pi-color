@@ -98,8 +98,9 @@ const ToolBar: React.FC<ToolBarProps> = ({
 
   return (
     <Styled.ToolBarWrapper>
-      {tools.map(tool => (
+      {tools.map((tool, index) => (
         <Tool
+          key={index}
           src={tool.src}
           alt={tool.alt}
           onClick={tool.action}

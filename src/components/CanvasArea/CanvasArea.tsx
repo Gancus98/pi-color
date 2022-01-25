@@ -19,6 +19,8 @@ import { ToolActions } from '../Picker/Picker';
 const CANVAS_BASE_COLOR = '#222222';
 
 type PickerProps = {
+  image: CanvasImageSource;
+  handleSetImage: (image: CanvasImageSource) => void;
   setPickedColor: (color: string) => void;
   action?: ToolActions;
   setAction: (newAction: ToolActions) => void;
@@ -27,6 +29,8 @@ type PickerProps = {
 };
 
 const CanvasArea: React.FC<PickerProps> = ({
+  image,
+  handleSetImage,
   setPickedColor,
   action,
   setAction,
@@ -39,7 +43,6 @@ const CanvasArea: React.FC<PickerProps> = ({
   const [cursorY, setCursorY] = useState(0);
   const fileInput = useRef<HTMLInputElement>(null);
   const [isDropActive, setIsDropActive] = useState(false);
-  const [image, setImage] = useState<CanvasImageSource>();
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
@@ -48,6 +51,40 @@ const CanvasArea: React.FC<PickerProps> = ({
   const [imageStartY, setImageStartY] = useState(0);
 
   const { width } = useWindowWidth();
+
+  const findCorrectSize = useCallback(
+    (image: HTMLImageElement) => {
+      if (image.width > image.height) {
+        if (width > 768) {
+          if (image.width < 700 && image.height < 450) {
+            return [image.width, image.height];
+          }
+          const ratio = 700 / image.width;
+          const width = image.width * ratio;
+          const height = image.height * ratio;
+          return [width, height];
+        } else {
+          const ratio = 280 / image.width;
+          const width = image.width * ratio;
+          const height = image.height * ratio;
+          return [width, height];
+        }
+      } else {
+        if (width > 768) {
+          const ratio = 450 / image.height;
+          const width = image.width * ratio;
+          const height = image.height * ratio;
+          return [width, height];
+        } else {
+          const ratio = 220 / image.height;
+          const width = image.width * ratio;
+          const height = image.height * ratio;
+          return [width, height];
+        }
+      }
+    },
+    [width]
+  );
 
   useEffect(() => {
     const canvas: HTMLCanvasElement =
@@ -85,9 +122,10 @@ const CanvasArea: React.FC<PickerProps> = ({
         setAction(ToolActions.None);
       }
     }
-  }, [action, image, setAction]);
+  }, [action, findCorrectSize, handlePaletteColors, image, setAction]);
 
   const handleInputChange = (input: any) => {
+    console.log('input change');
     if (input.target.files && input.target.files[0]) {
       const canvas: HTMLCanvasElement =
         canvasRef.current as unknown as HTMLCanvasElement;
@@ -106,7 +144,7 @@ const CanvasArea: React.FC<PickerProps> = ({
         let loadedImage = new Image();
         reader.onload = () => {
           loadedImage.src = reader.result?.toString() as string;
-          setImage(loadedImage);
+          handleSetImage(loadedImage);
           loadedImage.onload = () => {
             const canvas: HTMLCanvasElement =
               canvasRef.current as unknown as HTMLCanvasElement;
@@ -127,39 +165,8 @@ const CanvasArea: React.FC<PickerProps> = ({
         };
       }
     },
-    [handlePaletteColors]
+    [findCorrectSize, handlePaletteColors, handleSetImage]
   );
-
-  const findCorrectSize = (image: HTMLImageElement) => {
-    if (image.width > image.height) {
-      if (width > 768) {
-        if (image.width < 700 && image.height < 450) {
-          return [image.width, image.height];
-        }
-        const ratio = 700 / image.width;
-        const width = image.width * ratio;
-        const height = image.height * ratio;
-        return [width, height];
-      } else {
-        const ratio = 280 / image.width;
-        const width = image.width * ratio;
-        const height = image.height * ratio;
-        return [width, height];
-      }
-    } else {
-      if (width > 768) {
-        const ratio = 450 / image.height;
-        const width = image.width * ratio;
-        const height = image.height * ratio;
-        return [width, height];
-      } else {
-        const ratio = 220 / image.height;
-        const width = image.width * ratio;
-        const height = image.height * ratio;
-        return [width, height];
-      }
-    }
-  };
 
   const clearCanvas = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = CANVAS_BASE_COLOR;
@@ -172,6 +179,21 @@ const CanvasArea: React.FC<PickerProps> = ({
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     clearCanvas(ctx);
   }, []);
+
+  useEffect(() => {
+    if (image) {
+      const canvas: HTMLCanvasElement =
+        canvasRef.current as unknown as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
+        image as HTMLImageElement
+      );
+      ctx.drawImage(image, 0, 0, imageScaledWidth, imageScaledHeight);
+      handlePaletteColors(
+        getImageColorsPalette(ctx, imageScaledWidth, imageScaledHeight)
+      );
+    }
+  }, [findCorrectSize, handlePaletteColors, image]);
 
   useEffect(() => {
     const canvas: HTMLCanvasElement =
@@ -247,6 +269,7 @@ const CanvasArea: React.FC<PickerProps> = ({
     imageStartX,
     imageStartY,
     action,
+    findCorrectSize,
   ]);
 
   const handleCanvasClick = (event: any) => {

@@ -6,7 +6,10 @@ import ToolBar from '../ToolBar/ToolBar';
 import Complementary from '../Complementary/Complementary';
 import * as Styled from './Picker.styles';
 
-type PickerProps = {};
+type PickerProps = {
+  image: CanvasImageSource;
+  handleSetImage: (image: CanvasImageSource) => void;
+};
 
 export enum ToolActions {
   ZoomIn = 'ZoomIn',
@@ -18,7 +21,8 @@ export enum ToolActions {
   None = 'None',
 }
 
-const Picker: React.FC<PickerProps> = () => {
+const Picker: React.FC<PickerProps> = ({ image, handleSetImage }) => {
+  console.log('picker');
   const [pickedColor, setPickedColor] = useState('');
   const [action, setAction] = useState<ToolActions>(ToolActions.None);
   const [pickerSize, setPickerSize] = useState(2);
@@ -61,6 +65,8 @@ const Picker: React.FC<PickerProps> = () => {
         <Styled.MainContainer>
           <Styled.MainWrapper>
             <CanvasArea
+              image={image}
+              handleSetImage={handleSetImage}
               setPickedColor={handlePickedColor}
               action={action}
               setAction={handleSetAction}
