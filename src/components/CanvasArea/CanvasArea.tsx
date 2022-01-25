@@ -226,11 +226,9 @@ const CanvasArea: React.FC<PickerProps> = ({
 
     canvas.ontouchstart = event => {
       console.log(event.changedTouches[0].clientX);
-      if (event.changedTouches[1]) {
-        setIsTouchDown(true);
-        setMouseX(event.changedTouches[0].clientX);
-        setMouseY(event.changedTouches[0].clientY);
-      }
+      setIsTouchDown(true);
+      setMouseX(event.changedTouches[0].clientX);
+      setMouseY(event.changedTouches[0].clientY);
     };
 
     canvas.ontouchend = event => {
