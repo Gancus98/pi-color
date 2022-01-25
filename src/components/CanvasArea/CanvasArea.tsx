@@ -44,6 +44,7 @@ const CanvasArea: React.FC<PickerProps> = ({
   const fileInput = useRef<HTMLInputElement>(null);
   const [isDropActive, setIsDropActive] = useState(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isTouchDown, setIsTouchDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
 
@@ -223,6 +224,46 @@ const CanvasArea: React.FC<PickerProps> = ({
       setIsDropActive(false);
     };
 
+    canvas.ontouchstart = event => {
+      console.log(event.changedTouches[0].clientX);
+      if (event.changedTouches[1]) {
+        setIsTouchDown(true);
+        setMouseX(event.changedTouches[0].clientX);
+        setMouseY(event.changedTouches[0].clientY);
+      }
+    };
+
+    canvas.ontouchend = event => {
+      setImageStartX(prev => prev + event.changedTouches[0].clientX - mouseX);
+      setImageStartY(prev => prev + event.changedTouches[0].clientY - mouseY);
+      setIsTouchDown(false);
+    };
+
+    canvas.ontouchmove = event => {
+      const canvas: HTMLCanvasElement =
+        canvasRef.current as unknown as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      const { x: xOffset, y: yOffset } = ctx.canvas.getBoundingClientRect();
+      setCursorX(event.changedTouches[0].pageX - xOffset);
+      setCursorY(event.changedTouches[0].pageY - yOffset);
+
+      if (isTouchDown && action === ToolActions.Move) {
+        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+        const [imageScaledWidth, imageScaledHeight] = findCorrectSize(
+          image as HTMLImageElement
+        );
+        clearCanvas(ctx);
+
+        ctx.drawImage(
+          image as CanvasImageSource,
+          event.changedTouches[0].clientX - mouseX + imageStartX,
+          event.changedTouches[0].clientY - mouseY + imageStartY,
+          imageScaledWidth,
+          imageScaledHeight
+        );
+      }
+    };
+
     canvas.onmousedown = event => {
       setIsMouseDown(true);
       setMouseX(event.clientX);
@@ -270,6 +311,7 @@ const CanvasArea: React.FC<PickerProps> = ({
     imageStartY,
     action,
     findCorrectSize,
+    isTouchDown,
   ]);
 
   const handleCanvasClick = (event: any) => {
