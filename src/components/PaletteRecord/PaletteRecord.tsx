@@ -14,7 +14,7 @@ const PaletteRecord: React.FC<PaletteRecordProps> = ({
   colors,
   name,
 }) => {
-  const [colorName, setColorName] = useState(name);
+  const [paletteName, setPaletteName] = useState(name);
   const [removed, setRemoved] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const handleDelete = () => {
@@ -23,7 +23,9 @@ const PaletteRecord: React.FC<PaletteRecordProps> = ({
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColorName(e.target.value);
+    if (!e.target.value.endsWith(';')) {
+      setPaletteName(e.target.value);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,7 +38,7 @@ const PaletteRecord: React.FC<PaletteRecordProps> = ({
     setIsEdited(false);
     setNewPaletteName(
       recordKey,
-      colorName.length > 0 ? colorName : 'Undefined name'
+      paletteName.length > 0 ? paletteName : 'Undefined name'
     );
   };
 
@@ -47,7 +49,7 @@ const PaletteRecord: React.FC<PaletteRecordProps> = ({
           <Styled.SingleCell>
             {isEdited ? (
               <Styled.Input
-                value={colorName}
+                value={paletteName}
                 onChange={handleNameChange}
                 onKeyDown={handleKeyDown}
                 onBlur={handleStopEdit}
@@ -55,7 +57,7 @@ const PaletteRecord: React.FC<PaletteRecordProps> = ({
               />
             ) : (
               <Styled.Typography onClick={() => setIsEdited(true)}>
-                {colorName}
+                {paletteName}
               </Styled.Typography>
             )}
           </Styled.SingleCell>

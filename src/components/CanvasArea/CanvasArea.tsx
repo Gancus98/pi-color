@@ -131,13 +131,34 @@ const CanvasArea: React.FC<PickerProps> = ({
   );
 
   const findCorrectSize = (image: HTMLImageElement) => {
-    if (image.width < 700 && image.height < 450) {
-      return [image.width, image.height];
+    if (image.width > image.height) {
+      if (width > 768) {
+        if (image.width < 700 && image.height < 450) {
+          return [image.width, image.height];
+        }
+        const ratio = 700 / image.width;
+        const width = image.width * ratio;
+        const height = image.height * ratio;
+        return [width, height];
+      } else {
+        const ratio = 280 / image.width;
+        const width = image.width * ratio;
+        const height = image.height * ratio;
+        return [width, height];
+      }
+    } else {
+      if (width > 768) {
+        const ratio = 450 / image.height;
+        const width = image.width * ratio;
+        const height = image.height * ratio;
+        return [width, height];
+      } else {
+        const ratio = 220 / image.height;
+        const width = image.width * ratio;
+        const height = image.height * ratio;
+        return [width, height];
+      }
     }
-    const ratio = 700 / image.width;
-    const width = image.width * ratio;
-    const height = image.height * ratio;
-    return [width, height];
   };
 
   const clearCanvas = (ctx: CanvasRenderingContext2D) => {

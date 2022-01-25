@@ -68,5 +68,9 @@ export const setNewColorName = async (key: string, newName: string) => {
 export const setNewPaletteName = async (key: string, newName: string) => {
     const value = await get(key);
     const splittedValue = value.split(';');
-    set(key, `${newName};${splittedValue[1]}`);
+    const newSplittedValue = splittedValue.map((element: string, index: number) => {
+        if (index === 0) return newName
+        return element
+    })
+    set(key, newSplittedValue.join(';'));
 }

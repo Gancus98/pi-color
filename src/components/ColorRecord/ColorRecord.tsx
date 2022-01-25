@@ -24,7 +24,9 @@ const ColorRecord: React.FC<ColorRecordProps> = ({
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColorName(e.target.value);
+    if (!e.target.value.endsWith(';')) {
+      setColorName(e.target.value);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
