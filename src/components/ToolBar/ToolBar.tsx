@@ -98,15 +98,17 @@ const ToolBar: React.FC<ToolBarProps> = ({
 
   return (
     <Styled.ToolBarWrapper>
-      {tools.map((tool, index) => (
-        <Tool
-          key={index}
-          src={tool.src}
-          alt={tool.alt}
-          onClick={tool.action}
-          isActive={action === tool.toolAction}
-        />
-      ))}
+      <Styled.ToolContatiner>
+        {tools.map((tool, index) => (
+          <Tool
+            key={index}
+            src={tool.src}
+            alt={tool.alt}
+            onClick={tool.action}
+            isActive={action === tool.toolAction}
+          />
+        ))}
+      </Styled.ToolContatiner>
       {showStepper && (
         <Stepper pickerSize={pickerSize} handlePickerSize={handlePickerSize} />
       )}

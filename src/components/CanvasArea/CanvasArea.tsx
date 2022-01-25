@@ -126,7 +126,6 @@ const CanvasArea: React.FC<PickerProps> = ({
   }, [action, findCorrectSize, handlePaletteColors, image, setAction]);
 
   const handleInputChange = (input: any) => {
-    console.log('input change');
     if (input.target.files && input.target.files[0]) {
       const canvas: HTMLCanvasElement =
         canvasRef.current as unknown as HTMLCanvasElement;
@@ -225,7 +224,6 @@ const CanvasArea: React.FC<PickerProps> = ({
     };
 
     canvas.ontouchstart = event => {
-      console.log(event.changedTouches[0].clientX);
       setIsTouchDown(true);
       setMouseX(event.changedTouches[0].clientX);
       setMouseY(event.changedTouches[0].clientY);
@@ -238,6 +236,7 @@ const CanvasArea: React.FC<PickerProps> = ({
     };
 
     canvas.ontouchmove = event => {
+      event.preventDefault();
       const canvas: HTMLCanvasElement =
         canvasRef.current as unknown as HTMLCanvasElement;
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;

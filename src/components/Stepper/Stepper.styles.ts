@@ -6,6 +6,9 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+@media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 export const Stepper = styled.input`

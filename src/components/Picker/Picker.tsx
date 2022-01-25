@@ -22,7 +22,6 @@ export enum ToolActions {
 }
 
 const Picker: React.FC<PickerProps> = ({ image, handleSetImage }) => {
-  console.log('picker');
   const [pickedColor, setPickedColor] = useState('');
   const [action, setAction] = useState<ToolActions>(ToolActions.None);
   const [pickerSize, setPickerSize] = useState(2);

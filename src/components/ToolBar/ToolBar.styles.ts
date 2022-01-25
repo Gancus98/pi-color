@@ -10,10 +10,19 @@ export const ToolBarWrapper = styled.div`
   align-items: center;
   margin-top: 16px;
   @media (max-width: 768px) {
+    margin-top: 48px;
     width: 300px;
     height: 36px;
+    flex-direction: column;
   }
 `;
+
+export const ToolContatiner = styled.div`
+  display: flex;
+  @media (max-width: 768px) {
+    margin-top: -36px;
+  }
+`
 
 export const ToolWrapper = styled.div`
   margin: 8px;
