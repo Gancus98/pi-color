@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { rgbToHex } from '../../utils/colorTransforms';
 import { addNewPalette } from '../../utils/dbHelper';
-import Button from '../Button/Button';
 import ColorTile from '../ColorTile/ColorTile';
 import * as Styled from './ImagePalette.styles';
 
@@ -108,8 +107,8 @@ const ImagePalette: React.FC<ImagePaletteProps> = ({
           )}
         </Styled.TilesWrapper>
         <Styled.ButtonsWrapper>
-          <Button onClick={handleDecreasePalette}>-</Button>
-          <Button onClick={handleIncreasePalette}>+</Button>
+          <Styled.Button onClick={handleDecreasePalette}>-</Styled.Button>
+          <Styled.Button onClick={handleIncreasePalette}>+</Styled.Button>
         </Styled.ButtonsWrapper>
       </Styled.Wrapper>
     </>

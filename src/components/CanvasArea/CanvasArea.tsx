@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { getImageColorsPalette } from '../../utils/imagePalete';
+import { getImageColorsPalette } from '../../utils/imagePaletteHelper';
 import {
   createPixelsArray,
   pixelsAvgColor,

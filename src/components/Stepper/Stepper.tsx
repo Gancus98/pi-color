@@ -6,10 +6,7 @@ type StepperProps = {
   handlePickerSize: Dispatch<SetStateAction<number>>;
 };
 
-const NavButton: React.FC<StepperProps> = ({
-  pickerSize,
-  handlePickerSize,
-}) => {
+const Stepper: React.FC<StepperProps> = ({ pickerSize, handlePickerSize }) => {
   const handlePickerSizeChange = (event: React.FormEvent<HTMLInputElement>) => {
     handlePickerSize(parseInt(event.currentTarget.value));
   };
@@ -31,4 +28,4 @@ const NavButton: React.FC<StepperProps> = ({
   );
 };
 
-export default NavButton;
+export default Stepper;

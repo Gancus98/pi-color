@@ -1,20 +1,4 @@
 export const colors = {
-    // secondary: 'red',
-    // secondaryLight: '#F6F5F5',
-    // primary: '#276678',
-    // primaryLight: '#1687A7',
-    // text: '#212121',
-    // textLight: '#F6F5F5',
-    // shadowColor: 'rgba(66, 68, 90, 1)',
-    // background: 'white',
-    
-    // background: '#323233',
-    // #323233
-    // #2d2d2d
-    // #252526
-    // #1e1e1e
-
-
     secondary: '#323233',
     secondaryLight: '#2d2d2d',
     primary: '#b84600',
